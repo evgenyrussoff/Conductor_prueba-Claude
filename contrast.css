@@ -112,3 +112,28 @@ body.light-theme .note,body.light-theme .backup-status{color:#26382d!important}
 body:not(.light-theme) #monthlyCloseScreen h2,body:not(.light-theme) #monthlyCloseScreen h3{color:#a8edc2!important}
 body:not(.light-theme) #monthlyCloseScreen label{color:#d4e6db!important}
 .share-whatsapp{background:linear-gradient(#0b7338,#095e2e)!important}
+
+/* V5.6.4 */
+body.light-theme .auto-btn{background:linear-gradient(#138552,#0a6f43)!important;color:#fff!important;text-shadow:0 1px 2px rgba(0,0,0,.35)}
+.tach-grid .tach-available-card{padding-right:92px}
+.tach-grid .tach-available-card:before{width:58px;height:58px;right:18px;mask:radial-gradient(farthest-side,transparent calc(100% - 6px),#000 calc(100% - 5px));-webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 6px),#000 calc(100% - 5px))}
+/* V5.6.4 — Bloque de incentivos en modo oscuro */
+body:not(.light-theme) .finish-payroll-entry h3{color:#a8edc2}
+body:not(.light-theme) .finish-payroll-entry select,body:not(.light-theme) .payroll-manual-entry select{background:rgba(4,20,14,.92)!important;color:#f2fff7!important}
+body:not(.light-theme) .finish-payroll-entry option,body:not(.light-theme) .payroll-manual-entry option{background:#0f2419;color:#f2fff7}
+body.light-theme .finish-payroll-entry h3{color:#0a6b3f}
+/* V5.6.4 — Ajustes finos de contraste (inicio y resumen de Caducidades) */
+body .home-actions .main-action.caducidades.documents-alert-expired{color:#7d120d!important}
+body .home-actions .main-action.caducidades.documents-alert-soon{color:#5a4100!important}
+.home-screen .secondary-action{color:#0a3a25!important}
+.home-screen .icon-btn{color:#08452c}
+body:not(.light-theme) #documentsScreen article:has(> strong + small){background:rgba(255,255,255,.07)!important;border:1px solid var(--ui-border)}
+body:not(.light-theme) #documentsScreen article:has(> strong + small) strong{color:#6ee7a3}
+body:not(.light-theme) #documentsScreen article.summary-soon strong{color:#ffd166}
+body:not(.light-theme) #documentsScreen article.summary-expired strong{color:#ff9a90}
+body:not(.light-theme) #documentsScreen article:has(> strong + small) small{color:#c4d6cb}
+body.light-theme #documentsScreen article:has(> strong + small){background:#fff!important;border:1px solid #d9e9df}
+body.light-theme #documentsScreen article:has(> strong + small) strong{color:#0a6b3f}
+body.light-theme #documentsScreen article.summary-soon strong{color:#7a5800}
+body.light-theme #documentsScreen article.summary-expired strong{color:#a11f1a}
+body.light-theme #documentsScreen article:has(> strong + small) small{color:#44594b}

@@ -63,3 +63,9 @@
 
 /* V5.6.3 */
 .home-ring-svg text{font:800 10.5px system-ui,-apple-system,sans-serif}
+
+/* V5.6.4 — Movimiento suave de la foto al abrir la app */
+@keyframes photoDrift{from{background-position:100% 50%}to{background-position:76% 50%}}
+.home-screen{animation:photoDrift 16s cubic-bezier(.25,.6,.3,1) 1 both}
+/* Modo noche: brillo más suave y tono cálido */
+body.night-soft::after{content:"";position:fixed;inset:0;z-index:2147483000;pointer-events:none;background:rgba(30,12,0,.2)}

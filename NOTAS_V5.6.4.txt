@@ -1,0 +1,9 @@
+V5.6.4
+1. Pantalla de inicio: la foto se desplaza suavemente hacia la tractora al abrir la app (16 s, una sola vez; respeta "reducir movimiento").
+2. Modo noche automático (19:30 a 07:00): oscuro, brillo más suave y tono cálido. Se activa o desactiva en Ajustes > "Modo noche automático". Si está desactivado, se usa la apariencia elegida (claro u oscuro).
+3. Inicio y Fin de jornada, modo claro: el botón AHORA tiene ahora letra blanca sobre verde, bien legible.
+4. Fin de jornada > Incentivos: el campo "Nº descargas" solo aparece al elegir "Descargas múltiples" (también en el incentivo manual cuando corresponde). Se vacía y se oculta al cambiar de concepto o añadir.
+5. Caducidades: el botón de "Mis documentos" vuelve a mostrar "+ Añadir" (antes una regla global lo cambiaba a "Guardar").
+6. Control Tacógrafo: el círculo de "Horas de conducción disponibles" es más pequeño y ya no toca el texto.
+Además: contraste revisado en el bloque de incentivos (modo oscuro), resumen de Caducidades y botones marginales de la pantalla de inicio.
+No se ha modificado ningún cálculo de jornadas, tacógrafo ni consumo.
