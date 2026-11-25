@@ -177,7 +177,7 @@ V5.5.2 — CORRECCIONES DE COPIAS DE SEGURIDAD
 - Ayuda explícita para introducir solo el número de la copia interna.
 - Versión visible y caché de Service Worker actualizada.
 
-V5.6.0 — EDICIÓN SIN GOOGLE DRIVE
+V5.5.3 — EDICIÓN SIN GOOGLE DRIVE
 ---------------------------------
 - Eliminada completamente la integración con Google Drive, Google Picker y Google OAuth.
 - Eliminados de config.js el Client ID, la API Key y el número del proyecto de Google Cloud.
@@ -190,3 +190,22 @@ V5.6.0 — EDICIÓN SIN GOOGLE DRIVE
 LIMITACIONES DE LAS COPIAS LOCALES
 ----------------------------------
 Una PWA no puede ejecutar tareas puntuales mientras está cerrada. La copia automática semanal se procesa al abrir la aplicación por primera vez después del lunes a las 00:01. IndexedDB permanece en el dispositivo, pero el usuario puede perderla al borrar los datos del navegador o desinstalar la PWA. Se recomienda descargar periódicamente una copia JSON y guardarla también en otro lugar seguro.
+
+
+V5.5.6 — INTEGRACIÓN SELECTIVA DE MEJORAS
+-----------------------------------------
+- Integradas mejoras de contadores de ampliaciones de 10 h y descansos diarios reducidos sin topes artificiales.
+- Conservación de descansos reducidos al cambiar de semana, reconstruidos desde el historial.
+- Mejor gestión de compensaciones: cada deuda se salda completa si cabe, sin bloquear otras de menor duración.
+- Avisos de plazo de compensación y excesos de contadores.
+- Detección más robusta de jornadas que cruzan el cambio de semana.
+- Validación de que la lectura bisemanal no sea inferior a la semanal.
+- Aviso orientativo para jornadas superiores a 15 horas.
+- Actualización de recursos en segundo plano mediante Service Worker.
+- Corregidos los topes que aún quedaban en el formulario de configuración inicial.
+- Escapado de nombres de lugares en el historial para evitar inserción de HTML desde datos importados.
+- Ajustado el vencimiento de compensaciones al final de la tercera semana siguiente.
+- Se conserva el sistema de copias de seguridad locales que ya existía en V5.5.3.
+
+
+V5.5.6: incluye primer módulo de cierre mensual, selección manual de fines de semana fuera, registro inicial de trayectos Ferry/Tren e incentivos, edición del informe y avisos visuales de horas semanales/bisemanal.

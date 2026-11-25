@@ -1,0 +1,37 @@
+/* v5.5.6 - Capa visual: animaciones, botones 3D, anillos y gráfico. No altera la lógica. */
+@keyframes scrIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes cardIn{from{opacity:0;transform:translateY(14px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes homeUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(24,168,102,.75)}70%{box-shadow:0 0 0 12px rgba(24,168,102,0)}100%{box-shadow:0 0 0 0 rgba(24,168,102,0)}}
+@keyframes grow{from{height:0}to{height:var(--h)}}
+.screen.active:not(.home-screen){animation:scrIn .28s ease-out}
+.topbar{animation:scrIn .5s ease-out}
+.home-content{animation:homeUp .55s cubic-bezier(.2,.8,.2,1)}
+.tach-grid>article,.stats-grid>article,.period-card,.km-chart{animation:cardIn .45s cubic-bezier(.2,.8,.2,1) both}
+.tach-grid>article:nth-child(2),.stats-grid>article:nth-child(2){animation-delay:.06s}
+.tach-grid>article:nth-child(3),.stats-grid>article:nth-child(3){animation-delay:.12s}
+.tach-grid>article:nth-child(4),.stats-grid>article:nth-child(4){animation-delay:.18s}
+.tach-grid>article:nth-child(5),.stats-grid>article:nth-child(5){animation-delay:.24s}
+.tach-grid>article:nth-child(n+6){animation-delay:.3s}
+.modal-overlay.show .modal-card{animation:cardIn .3s ease-out both}
+/* Botones con volumen 3D */
+.main-action,.secondary-action{background-image:linear-gradient(180deg,rgba(255,255,255,.22),rgba(255,255,255,0) 55%,rgba(0,0,0,.12));box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 4px 0 rgba(0,0,0,.32),0 8px 14px rgba(0,0,0,.3);transition:transform .08s,box-shadow .08s}
+.main-action:active,.secondary-action:active{transform:translateY(3px);box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 1px 0 rgba(0,0,0,.32),0 2px 5px rgba(0,0,0,.3)}
+/* Indicador latente con jornada abierta */
+.status-card:has(.journey-timer.running) .status-dot{animation:pulse 1.8s infinite}
+/* Anillos de progreso del tacógrafo */
+.has-ring{position:relative;padding-right:92px!important}
+.ring{position:absolute;right:12px;top:50%;width:68px;height:68px;margin-top:-34px}
+.ring circle{fill:none;stroke-width:4.5;stroke-linecap:round;transform:rotate(-90deg);transform-origin:22px 22px}
+.rg-bg{stroke:rgba(120,140,130,.28)}
+.rg-fg{transition:stroke-dashoffset 1s cubic-bezier(.2,.8,.2,1),stroke .4s}
+.rg-fg.ok{stroke:#12a05d}.rg-fg.warn{stroke:#e0a100}.rg-fg.bad{stroke:#d93a2f}
+.ring text{font:800 9px system-ui,sans-serif;fill:currentColor}
+/* Gráfico de km por periodo */
+.km-chart{background:#fff;border-radius:18px;padding:14px 14px 10px;margin:12px 0;box-shadow:0 5px 18px rgba(0,0,0,.06)}
+.km-chart h3{margin:0 0 10px;font-size:15px;color:#0a7b47}
+.bars{display:flex;align-items:flex-end;gap:8px;height:150px}
+.bar{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;gap:4px;min-width:0}
+.bar span{font-size:10px;font-weight:800;color:#145c3d}.bar small{font-size:11px;color:#6b766f}
+.bar i{display:block;width:100%;max-width:34px;border-radius:8px 8px 3px 3px;background:linear-gradient(#18c27a,#0a7b47);height:var(--h);animation:grow .8s cubic-bezier(.2,.8,.2,1) var(--d) both}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
