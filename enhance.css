@@ -35,3 +35,31 @@
 .bar span{font-size:10px;font-weight:800;color:#145c3d}.bar small{font-size:11px;color:#6b766f}
 .bar i{display:block;width:100%;max-width:34px;border-radius:8px 8px 3px 3px;background:linear-gradient(#18c27a,#0a7b47);height:var(--h);animation:grow .8s cubic-bezier(.2,.8,.2,1) var(--d) both}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+/* Indicador de disponibilidad de jornada en la tarjeta principal */
+.status-card{position:relative}
+.status-card.has-home-ring{align-items:center;padding-right:12px}
+.home-availability{margin-left:auto;display:flex;align-items:center;gap:9px;flex:0 0 auto}
+.home-ring{width:64px;height:64px;position:relative;flex:0 0 64px}
+.home-ring-svg{width:64px;height:64px;display:block}
+.home-ring-svg circle{fill:none;stroke-width:4.5;stroke-linecap:round;transform:rotate(-90deg);transform-origin:22px 22px}
+.home-availability-copy{display:flex;flex-direction:column;gap:2px;min-width:75px}
+.home-availability-copy small{font-size:10px;opacity:.78;line-height:1.2}
+.home-availability-copy strong{font-size:15px;line-height:1.2;font-weight:900;white-space:nowrap}
+.home-availability-copy span{font-size:10px;opacity:.72}
+@media(max-width:390px){.status-card.has-home-ring{gap:6px;padding:10px}.home-availability{gap:5px}.home-ring{width:54px;height:54px;flex-basis:54px}.home-ring-svg{width:54px;height:54px}.home-availability-copy strong{font-size:13px}.home-availability-copy small,.home-availability-copy span{font-size:9px}}
+@media(prefers-reduced-motion:reduce){.rg-fg{transition:none!important}}
+
+/* Volumen 3D coherente también en botones de formularios y acciones */
+.save-btn,.cancel-btn,.auto-btn,.period-change-btn,.secondary-action,.main-action{
+ background-image:linear-gradient(180deg,rgba(255,255,255,.22),rgba(255,255,255,0) 55%,rgba(0,0,0,.12));
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.32),0 3px 0 rgba(0,0,0,.24),0 6px 11px rgba(0,0,0,.16);
+ transition:transform .1s ease,box-shadow .1s ease,filter .15s ease;
+}
+.save-btn:active,.cancel-btn:active,.auto-btn:active,.period-change-btn:active,.secondary-action:active,.main-action:active{
+ transform:translateY(2px);
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 1px 0 rgba(0,0,0,.2),0 2px 4px rgba(0,0,0,.15);
+}
+
+/* V5.6.3 */
+.home-ring-svg text{font:800 10.5px system-ui,-apple-system,sans-serif}

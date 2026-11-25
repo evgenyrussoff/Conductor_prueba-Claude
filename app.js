@@ -2,6 +2,16 @@ const DB_KEY="truckWorkLog.v1";
 const $=id=>document.getElementById(id);
 const DEFAULT_STATE={truckPlate:"",journeys:[],fuels:[],documents:[],resetStatsAt:"",resetHistoryAt:"",statsPeriodStartDay:26,tach:{weeklyDriveMin:0,weeklyDriveWeekKey:"",biweeklyDriveMin:0,biweeklyBaseAt:"",reducedDailyUsed:0,reducedDailyBaseAt:"",tenHourUsed:0,tenHourWeekKey:"",pendingCompMin:0,consecutiveReducedWeekly:0,lastWeeklyRestEnd:"",lastWeeklyRestType:"45",lastReturnDate:"",weeklyRests:[],baselineAt:"",initialSetupDone:false,calcVersion:"",lastRecalculatedAt:"",weeklyCalc:{},crossWeekBaselineAt:"",manualTachBaselineAt:""}};
 const state=loadState();
+// Exposición de solo lectura para los indicadores visuales de la PWA.
+window.getNoriegaJourneyVisualData=()=>{
+  const open=state.journeys.find(j=>j.status==="OPEN");
+  if(!open)return null;
+  const previous=state.journeys.filter(j=>j.status==="CLOSED"&&j.endDate&&new Date(j.endDate)<=new Date(open.startDate)).sort((a,b)=>new Date(b.endDate)-new Date(a.endDate))[0];
+  const restMin=previous?Math.max(0,Math.round((new Date(open.startDate)-new Date(previous.endDate))/60000)):null;
+  // Descanso diario normal (11 h) -> ventana de 13 h; reducido (9 h) -> ventana de 15 h.
+  const limitMin=restMin===null?780:(restMin>=540&&restMin<660?900:780);
+  return {startDate:open.startDate,restMin,limitMin};
+};
 function loadState(){try{const raw=JSON.parse(localStorage.getItem(DB_KEY)||"{}");const merged=Object.assign({},DEFAULT_STATE,raw,{tach:Object.assign({},DEFAULT_STATE.tach,raw.tach||{})});if(merged.truckPlate&&raw.tach&&raw.tach.baselineAt&&!Object.prototype.hasOwnProperty.call(raw.tach,"initialSetupDone"))merged.tach.initialSetupDone=true;return merged}catch(e){return JSON.parse(JSON.stringify(DEFAULT_STATE))}}
 function saveState(){localStorage.setItem(DB_KEY,JSON.stringify(state));updateUI()}
 function uid(prefix){return prefix+"_"+Date.now()+"_"+Math.random().toString(36).slice(2,8)}
@@ -17,6 +27,11 @@ function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.re
 function backHome(){show("home")}
 function backHistory(){if(window.__journeyDetailSource==="calendar"){renderTach();show("tachScreen");return}renderHistory();show("historyScreen")}
 document.querySelectorAll("[data-back]").forEach(b=>b.addEventListener("click",backHome));
+// Preferencia visual local: el tema oscuro Premium es el predeterminado.
+function applyThemePreference(){const light=localStorage.getItem("noriegaTheme_v1")==="light";document.body.classList.toggle("light-theme",light);const b=$("themeToggleBtn");if(b){b.querySelector("strong").textContent=light?"Apariencia · Modo oscuro":"Apariencia · Modo claro";b.querySelector("span").textContent=light?"🌙":"🌗"}const meta=document.querySelector('meta[name="theme-color"]');if(meta)meta.content=light?"#f0f6f2":"#071b15"}
+applyThemePreference();$("themeToggleBtn")?.addEventListener("click",()=>{localStorage.setItem("noriegaTheme_v1",document.body.classList.contains("light-theme")?"dark":"light");applyThemePreference();toast(document.body.classList.contains("light-theme")?"Modo claro activado":"Modo oscuro activado")});
+// Microrespuesta háptica opcional: funciona solo en navegadores/dispositivos compatibles.
+document.addEventListener("click",e=>{const b=e.target.closest("button");if(!b||b.disabled||!navigator.vibrate)return;if(b.matches(".save-btn,.start,.finish,.main-action,.secondary-action,.back"))navigator.vibrate(8)},{passive:true});
 let swipeStartX=0,swipeStartY=0;document.addEventListener("touchstart",e=>{const t=e.touches[0];swipeStartX=t.clientX;swipeStartY=t.clientY},{passive:true});document.addEventListener("touchend",e=>{const t=e.changedTouches[0],dx=t.clientX-swipeStartX,dy=t.clientY-swipeStartY;if(swipeStartX<=25&&dx>=70&&Math.abs(dx)>Math.abs(dy)*1.3){const active=document.querySelector(".screen.active");if(active&&active.id!=="home"){if(active.id==="journeyDetailScreen")backHistory();else if(active.id==="consumptionHistoryScreen"||active.id==="kilometresHistoryScreen")show("statsScreen");else backHome();}}},{passive:true});
 function initSelects(){for(let i=0;i<=24;i++){$("driveHours").insertAdjacentHTML("beforeend",`<option value="${i}">${i} ${I18N.t("hours")}</option>`);$("editDriveHours").insertAdjacentHTML("beforeend",`<option value="${i}">${i} ${I18N.t("hours")}</option>`)}for(let i=0;i<60;i++){$("driveMinutes").insertAdjacentHTML("beforeend",`<option value="${i}">${String(i).padStart(2,"0")} ${I18N.t("minutes")}</option>`);$("editDriveMinutes").insertAdjacentHTML("beforeend",`<option value="${i}">${String(i).padStart(2,"0")} ${I18N.t("minutes")}</option>`)} }
 function setNow(id){$(id).value=nowLocalInput()}
@@ -238,7 +253,24 @@ function renderKilometresHistory(){
   const rows=[...byPeriod.values()].sort((a,b)=>b.start-a.start);
   list.innerHTML=rows.length?rows.map(x=>`<div class="consumption-month-row"><strong>${x.start.toLocaleDateString(I18N.lang,{day:"2-digit",month:"short",year:"numeric"})} – ${x.end.toLocaleDateString(I18N.lang,{day:"2-digit",month:"short",year:"numeric"})}</strong><span>${x.km.toLocaleString(I18N.lang)} km</span><small>${x.journeys} ${x.journeys===1?"jornada cerrada":"jornadas cerradas"}</small></div>`).join(""):`<div class="settings-card">Todavía no hay jornadas cerradas para mostrar kilómetros.</div>`;
 }
-function renderStats(){const p=monthPeriod();$("periodLabel").textContent=`${p.start.toLocaleDateString(I18N.lang)} → ${p.end.toLocaleDateString(I18N.lang)}`;const closed=completedJourneys(),inMonth=closed.filter(j=>{const d=new Date(j.endDate||j.startDate);return d>=p.start&&d<=p.end});const monthKm=inMonth.reduce((s,j)=>s+(j.kmDay||0),0),totalKm=closed.reduce((s,j)=>s+(j.kmDay||0),0),speedKm=closed.reduce((s,j)=>s+(j.kmDay||0),0),drive=closed.reduce((s,j)=>s+(j.driveMin||0),0);$("monthKm").textContent=`${monthKm.toLocaleString(I18N.lang)} km`;$("totalKm").textContent=`${totalKm.toLocaleString(I18N.lang)} km`;$("yearKm").textContent=`${yearKm().toLocaleString(I18N.lang)} km`;$("avgSpeed").textContent=drive?`${(speedKm/(drive/60)).toFixed(1)} ${I18N.t("speedUnit")}`:"0 km/h";$("avgConsumption").textContent=calcOverallConsumption()??"— L/100 km"}
+function renderStats(){const p=monthPeriod();$("periodLabel").textContent=`${p.start.toLocaleDateString(I18N.lang)} → ${p.end.toLocaleDateString(I18N.lang)}`;const closed=completedJourneys(),inMonth=closed.filter(j=>{const d=new Date(j.endDate||j.startDate);return d>=p.start&&d<=p.end});const monthKm=inMonth.reduce((s,j)=>s+(j.kmDay||0),0),totalKm=closed.reduce((s,j)=>s+(j.kmDay||0),0),speedKm=closed.reduce((s,j)=>s+(j.kmDay||0),0),drive=closed.reduce((s,j)=>s+(j.driveMin||0),0);$("monthKm").textContent=`${monthKm.toLocaleString(I18N.lang)} km`;$("totalKm").textContent=`${totalKm.toLocaleString(I18N.lang)} km`;$("yearKm").textContent=`${yearKm().toLocaleString(I18N.lang)} km`;$("avgSpeed").textContent=drive?`${(speedKm/(drive/60)).toFixed(1)} ${I18N.t("speedUnit")}`:"0 km/h";$("avgConsumption").textContent=calcOverallConsumption()??"— L/100 km";renderVisualStats(closed)}
+function renderVisualStats(journeys){
+  const lang=I18N.lang,cur=monthPeriod(new Date()),dayStart=cur.start.getDate(),dim=(y,m)=>new Date(y,m+1,0).getDate(),pers=[];
+  // Kilómetros: periodos de facturación (p. ej. 26 → 25), igual que "Km mes en curso".
+  for(let i=5;i>=0;i--){const y=cur.start.getFullYear(),m=cur.start.getMonth()-i,p=monthPeriod(new Date(y,m,Math.min(dayStart,dim(y,m))));pers.push({start:p.start,end:p.end,km:0})}
+  journeys.forEach(j=>{const d=new Date(j.endDate||j.startDate);const p=pers.find(x=>d>=x.start&&d<=x.end);if(p)p.km+=Number(j.kmDay)||0});
+  // Combustible: meses naturales (1 al 30/31), igual que el consumo mensual.
+  const now=new Date(),months=[];for(let i=5;i>=0;i--)months.push({d:new Date(now.getFullYear(),now.getMonth()-i,1),liters:0});
+  visibleFuels().forEach(x=>{const d=new Date(`${fuelDateForDisplay(x)}T12:00:00`);const m=months.find(y=>y.d.getFullYear()===d.getFullYear()&&y.d.getMonth()===d.getMonth());if(m)m.liters+=Number(x.liters)||0});
+  const nf=v=>Math.round(v).toLocaleString(lang),sh=d=>d.toLocaleDateString(lang,{month:"short"}).replace(".",""),dm=d=>d.toLocaleDateString(lang,{day:"2-digit",month:"2-digit"});
+  const draw=(id,rows)=>{const el=$(id);if(!el)return;const max=Math.max(1,...rows.map(x=>x.v));el.innerHTML=rows.map((x,i)=>{const h=x.v?Math.max(5,Math.round(x.v/max*100)):2;return `<div class="mini-bar${i===rows.length-1?" current":""}" title="${x.tip}"><em>${x.v?nf(x.v):"—"}</em><div class="mini-bar-track"><div class="mini-bar-fill" style="height:${h}%;animation-delay:${i*65}ms"></div></div><small>${x.label}</small></div>`}).join("")};
+  draw("statsKmChart",pers.map(p=>({v:p.km,label:sh(p.end),tip:`${dm(p.start)} → ${dm(p.end)} · ${nf(p.km)} km`})));
+  draw("statsFuelChart",months.map(x=>({v:x.liters,label:sh(x.d),tip:`${nf(x.liters)} L`})));
+  const TT={es:["Últimos 6 periodos","Litros por mes natural"],en:["Last 6 periods","Litres per calendar month"],fr:["6 derniers périodes","Litres par mois civil"],pt:["Últimos 6 períodos","Litros por mês civil"],it:["Ultimi 6 periodi","Litri per mese solare"],de:["Letzte 6 Perioden","Liter pro Kalendermonat"],ro:["Ultimele 6 perioade","Litri pe lună calendaristică"]}[lang]||["Últimos 6 periodos","Litros por mes natural"];
+  const h3=id=>$(id)?.closest(".analytics-card")?.querySelector("h3");
+  if(h3("statsKmChart"))h3("statsKmChart").textContent=`${TT[0]} (${dayStart}→${cur.end.getDate()})`;
+  if(h3("statsFuelChart"))h3("statsFuelChart").textContent=TT[1];
+}
 function historyMetricClass(type,minutes){
   if(minutes==null)return "history-metric";
   if(type==="availability"){
@@ -327,7 +359,7 @@ function recalculateTachograph(persist=true){
   const lastRestD=t.lastWeeklyRestEnd?new Date(t.lastWeeklyRestEnd):null;const initialReduced=(base&&!isNaN(base)&&!(lastRestD&&!isNaN(lastRestD)&&lastRestD>base))?Number(t.initialReducedDailySnapshot||0):0;
   const reduced=initialReduced+reducedDailyFromApp();t.reducedDailyUsed=reduced;
   t.pendingCompMin=recomputeWeeklyCompensations();
-  t.lastRecalculatedAt=now.toISOString();t.calcVersion="5.5.6";
+  t.lastRecalculatedAt=now.toISOString();t.calcVersion="5.5.5";
   if(persist)localStorage.setItem(DB_KEY,JSON.stringify(state));
   return {currentTotal,previousTotal,biweeklyTotal:calculatedBiweekly};
 }
@@ -392,7 +424,7 @@ function biweeklyTotal(){
 function renderTach(){
   recalculateTachograph(true);const t=ensureTachMeta(),ws=weekStart(new Date()),we=addDays(ws,7),weekTotal=calcWeekTotal(ws),biTotal=biweeklyTotal(),ten=Number(t.tenHourUsed)||0,red=Number(t.reducedDailyUsed)||0,latestRest=t.weeklyRests.slice().sort((a,b)=>new Date(b.end)-new Date(a.end))[0];
   t.tenHourUsed=ten;t.reducedDailyUsed=red;updateManualTachButton();
-  $("tachWeekValue").textContent=`${minsToLong(weekTotal)} / 56 h`;$("tachWeekRemaining").textContent=minsToLong(Math.max(0,3360-weekTotal));$("tachBiValue").textContent=`${minsToLong(biTotal)} / 90 h`;$("tachBiRemaining").textContent=minsToLong(Math.max(0,5400-biTotal));$("tachAvailableValue").textContent=minsToLong(Math.min(Math.max(0,3360-weekTotal),Math.max(0,5400-biTotal)));$("tachTenValue").textContent=`${ten} / 2`;$("tachTenRemaining").textContent=String(Math.max(0,2-ten));$("tachReducedValue").textContent=`${red} / 3`;$("tachReducedRemaining").textContent=String(Math.max(0,3-red));const pending=recomputeWeeklyCompensations();$("tachCompValue").textContent=pending?minsToLong(pending):I18N.t("compNone");
+  $("tachWeekValue").textContent=`${minsToLong(weekTotal)} / 56 h`;$("tachWeekRemaining").textContent=minsToLong(Math.max(0,3360-weekTotal));$("tachBiValue").textContent=`${minsToLong(biTotal)} / 90 h`;$("tachBiRemaining").textContent=minsToLong(Math.max(0,5400-biTotal));const available=Math.min(Math.max(0,3360-weekTotal),Math.max(0,5400-biTotal));$("tachAvailableValue").textContent=minsToLong(available);const availableCard=$("tachAvailableValue").closest(".tach-available-card");if(availableCard)availableCard.style.setProperty("--tach-progress",`${Math.max(0,Math.min(100,available/3360*100))}%`);$("tachTenValue").textContent=`${ten} / 2`;$("tachTenRemaining").textContent=String(Math.max(0,2-ten));$("tachReducedValue").textContent=`${red} / 3`;$("tachReducedRemaining").textContent=String(Math.max(0,3-red));const pending=recomputeWeeklyCompensations();$("tachCompValue").textContent=pending?minsToLong(pending):I18N.t("compNone");
   const last=t.lastWeeklyRestEnd?new Date(t.lastWeeklyRestEnd):null;if(last&&!isNaN(last)){const deadline=new Date(last.getTime()+6*24*60*60*1000);if(Date.now()>=deadline.getTime()){const lang=I18N.lang||"es";const reached={es:"Límite alcanzado. Registra el descanso semanal cuando termine.",en:"Deadline reached. Record the weekly rest when it ends.",fr:"Limite atteint. Enregistrez le repos hebdomadaire à sa fin.",pt:"Limite atingido. Registe o descanso semanal quando terminar.",it:"Limite raggiunto. Registra il riposo settimanale quando termina.",de:"Frist erreicht. Wochenruhe nach Ende eintragen.",ro:"Termen atins. Înregistrează repausul săptămânal când se încheie."};$("tachWeeklyDeadline").textContent=reached[lang]||reached.es;}else{$("tachWeeklyDeadline").textContent=deadline.toLocaleString(I18N.lang,{day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"});}}else $("tachWeeklyDeadline").textContent=I18N.t("dataIncomplete");
   renderTachAlerts(weekTotal,biTotal,ten,red,last);renderWeekCalendar(ws);
   let statusClass="status-good",statusText=I18N.t("statusOk");if(weekTotal>3360||biTotal>5400||ten>2||red>3){statusClass="status-bad";statusText=I18N.t("statusReview")}else if((3360-weekTotal)<=600||(5400-biTotal)<=600||ten>=2||red>=3){statusClass="status-warn";statusText=I18N.t("statusWarn")}else if(!(weekTotal||biTotal||t.lastWeeklyRestEnd)){statusClass="status-data";statusText=I18N.t("statusOpen")}$('tachStatus').innerHTML=`<span class="${statusClass}">${statusText}</span>`;
@@ -578,7 +610,7 @@ function hasBackupData(){
     (t.weeklyRests||[]).length || t.initialSetupDone || t.baselineAt || t.manualTachBaselineAt || t.lastWeeklyRestEnd ||
     Number(t.weeklyDriveMin)||Number(t.biweeklyDriveMin)||Number(t.reducedDailyUsed)||Number(t.tenHourUsed));
 }
-function makeBackupPayload(){return {app:"Aplicación para Conductor",version:CONFIG.APP_VERSION||"5.5.6",exportedAt:new Date().toISOString(),data:JSON.parse(JSON.stringify(state))}}
+function makeBackupPayload(){return {app:"Aplicación para Conductor",version:CONFIG.APP_VERSION||"5.6.0",exportedAt:new Date().toISOString(),data:JSON.parse(JSON.stringify(state))}}
 function openBackupDB(){return new Promise((resolve,reject)=>{const req=indexedDB.open(BACKUP_DB_NAME,1);req.onupgradeneeded=()=>{const db=req.result;if(!db.objectStoreNames.contains(BACKUP_STORE))db.createObjectStore(BACKUP_STORE,{keyPath:"id",autoIncrement:true})};req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)})}
 async function saveInternalBackup(reason="manual"){const payload=makeBackupPayload(),blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"}),db=await openBackupDB();await new Promise((resolve,reject)=>{const tx=db.transaction(BACKUP_STORE,"readwrite"),store=tx.objectStore(BACKUP_STORE);store.add({name:backupFilename(),createdAt:new Date().toISOString(),reason,payload:JSON.stringify(payload)});tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error)});const all=await listInternalBackups();if(all.length>4){await new Promise((resolve,reject)=>{const tx=db.transaction(BACKUP_STORE,"readwrite"),store=tx.objectStore(BACKUP_STORE);all.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt)).slice(4).forEach(x=>store.delete(x.id));tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error)})}db.close();renderBackupStatus();return blob}
 async function listInternalBackups(){const db=await openBackupDB();const rows=await new Promise((resolve,reject)=>{const tx=db.transaction(BACKUP_STORE,"readonly"),req=tx.objectStore(BACKUP_STORE).getAll();req.onsuccess=()=>resolve(req.result||[]);req.onerror=()=>reject(req.error)});db.close();return rows.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt))}
@@ -617,7 +649,7 @@ $("importFile")?.addEventListener("change",e=>{const file=e.target.files?.[0];if
 
 
 
-if($("appVersion"))$("appVersion").textContent="v"+(CONFIG.APP_VERSION||"5.5.6");
+if($("appVersion"))$("appVersion").textContent="v"+(CONFIG.APP_VERSION||"5.6.0");
 renderBackupStatus();runScheduledBackups();
 
 initSelects();initPeriodEditor();updateUI();

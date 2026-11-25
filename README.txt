@@ -1,3 +1,8 @@
+APP CONDUCTOR NORIEGA V5.6.0
+=============================
+
+Rediseño visual Premium. Consulta NOTAS_V5.6.0.txt para el detalle de cambios y advertencias.
+
 APLICACIÓN PARA CONDUCTOR V5.5.0
 ================================
 
@@ -192,7 +197,7 @@ LIMITACIONES DE LAS COPIAS LOCALES
 Una PWA no puede ejecutar tareas puntuales mientras está cerrada. La copia automática semanal se procesa al abrir la aplicación por primera vez después del lunes a las 00:01. IndexedDB permanece en el dispositivo, pero el usuario puede perderla al borrar los datos del navegador o desinstalar la PWA. Se recomienda descargar periódicamente una copia JSON y guardarla también en otro lugar seguro.
 
 
-V5.5.6 — INTEGRACIÓN SELECTIVA DE MEJORAS
+V5.5.5 — INTEGRACIÓN SELECTIVA DE MEJORAS
 -----------------------------------------
 - Integradas mejoras de contadores de ampliaciones de 10 h y descansos diarios reducidos sin topes artificiales.
 - Conservación de descansos reducidos al cambiar de semana, reconstruidos desde el historial.
@@ -208,4 +213,7 @@ V5.5.6 — INTEGRACIÓN SELECTIVA DE MEJORAS
 - Se conserva el sistema de copias de seguridad locales que ya existía en V5.5.3.
 
 
-V5.5.6: incluye primer módulo de cierre mensual, selección manual de fines de semana fuera, registro inicial de trayectos Ferry/Tren e incentivos, edición del informe y avisos visuales de horas semanales/bisemanal.
+V5.5.5: incluye primer módulo de cierre mensual, selección manual de fines de semana fuera, registro inicial de trayectos Ferry/Tren e incentivos, edición del informe y avisos visuales de horas semanales/bisemanal.
+
+
+Versión 5.6.3: combinación visual. Consultar NOTAS_V5.6.3.txt.

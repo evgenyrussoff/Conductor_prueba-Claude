@@ -1,0 +1,26 @@
+APP CONDUCTOR NORIEGA · V5.6.0 · REDISEÑO VISUAL
+================================================
+
+Esta versión parte de V5.5.5 e incorpora un rediseño visual general. Se conservan los módulos y la estructura de datos de la versión base.
+
+MEJORAS VISUALES
+----------------
+- Tema Premium oscuro con acentos verdes y tarjetas translúcidas.
+- Cabeceras, botones, formularios, tarjetas, calendarios, diálogos e historial adaptados al nuevo tema.
+- Fondo fotográfico del camión conservado en la pantalla principal.
+- Botones con respuesta táctil, microinteracciones y transiciones suaves entre pantallas.
+- Indicador animado de jornada activa y estados de alerta más visibles.
+- Panel de tacógrafo con jerarquía visual reforzada y anillo decorativo en disponibilidad.
+- Gráficos de barras con kilómetros y litros registrados en los últimos seis meses.
+- Microrespuesta háptica opcional en dispositivos que admitan navigator.vibrate.
+- Respeto de la preferencia del sistema para reducir movimiento.
+- Actualización de color de la interfaz del navegador y caché PWA.
+
+IMPORTANTE
+---------
+- Los gráficos son visualizaciones de los datos que ya constan en el dispositivo; no crean ni alteran registros.
+- Los gráficos muestran los últimos seis meses naturales.
+- La vibración depende del navegador y del dispositivo; iOS puede no ofrecerla a una PWA.
+- Los efectos visuales no cambian los cálculos de jornadas, conducción, descansos, nómina ni incentivos.
+- Esta compilación requiere pruebas reales en iPhone. No se ha validado todavía en todos los tamaños de pantalla ni navegadores.
+- Antes de actualizar, exporta una copia JSON y conserva el ZIP anterior.

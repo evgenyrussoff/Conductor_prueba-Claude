@@ -1,4 +1,2 @@
-// Configuracion de la aplicacion. Las copias de seguridad se guardan en el dispositivo.
-const CONFIG = {
-  APP_VERSION: "5.5.6"
-};
+// Configuración de la aplicación. Los datos y las copias de seguridad permanecen en el dispositivo.
+const CONFIG = { APP_VERSION: "5.6.3" };

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#0a6f43">
+  <meta name="theme-color" content="#071b15">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Aplicación para Conductor">
@@ -14,6 +14,7 @@
   <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="enhance.css">
+  <link rel="stylesheet" href="contrast.css">
   <title>Aplicación para Conductor</title>
 </head>
 <body>
@@ -24,7 +25,7 @@
         <div class="brand-block">
           <div class="brand">
             <img src="icon-192.png" alt="" class="brand-icon">
-            <div class="brand-copy"><div class="brand-heading-row"><div class="brand-title">APP Conductor Noriega</div><span id="appVersion" class="app-version">v5.5.6</span></div><div class="brand-sub">Jornadas · Repostajes · Estadísticas</div></div>
+            <div class="brand-copy"><div class="brand-heading-row"><div class="brand-title">APP Conductor Noriega</div><span id="appVersion" class="app-version">v5.6.0</span></div><div class="brand-sub">Jornadas · Repostajes · Estadísticas</div></div>
           </div>
           <div class="sync-pill" id="syncStatus">📱 Datos se guardan en éste dispositivo</div>
         </div>
@@ -114,6 +115,11 @@
           <article><small id="statYearLabel">Km del año</small><strong id="yearKm">0 km</strong></article>
           <article><small id="statSpeedLabel">Velocidad media</small><strong id="avgSpeed">0 km/h</strong></article>
           <article><small id="statConsumptionLabel">Consumo medio</small><strong id="avgConsumption">— L/100 km</strong></article>
+        </div>
+        <div class="visual-analytics">
+          <div class="analytics-heading"><span class="analytics-kicker">RESUMEN VISUAL</span><strong>Evolución de tu actividad</strong></div>
+          <article class="analytics-card"><div class="analytics-card-head"><div><small>KILÓMETROS</small><h3>Últimos 6 periodos</h3></div><span class="analytics-icon">↗</span></div><div id="statsKmChart" class="mini-bars" aria-label="Kilómetros por periodo"></div></article>
+          <article class="analytics-card"><div class="analytics-card-head"><div><small>REPOSTAJES</small><h3>Litros registrados</h3></div><span class="analytics-icon">⛽</span></div><div id="statsFuelChart" class="mini-bars fuel-bars" aria-label="Litros repostados por mes"></div></article>
         </div>
         <button id="consumptionHistoryBtn" class="secondary-action wide consumption-history-btn" type="button">⛽ Consumo medio de combustible · Meses y años</button>
         <button id="kilometresHistoryBtn" class="secondary-action wide consumption-history-btn" type="button">🚚 Kilómetros recorridos · Meses y años</button>
@@ -267,7 +273,7 @@
         <h2>Informe mensual</h2>
         <button id="generatePayrollReportBtn" class="save-btn" type="button">Generar informe</button>
         <label class="payroll-report-label">Puedes editar el mensaje antes de compartirlo<textarea id="payrollReportText" rows="12"></textarea></label>
-        <div class="form-actions"><button id="sharePayrollWhatsApp" type="button" class="secondary-action">WhatsApp</button><button id="sharePayrollEmail" type="button" class="save-btn">Email</button></div>
+        <div class="form-actions"><button id="sharePayrollWhatsApp" type="button" class="secondary-action share-btn share-whatsapp"><svg class="share-icon whatsapp-icon" viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M16 3.1A12.7 12.7 0 0 0 5.1 22.3L3.5 28.5l6.3-1.6A12.8 12.8 0 1 0 16 3.1Zm0 23.2c-2 0-3.9-.5-5.6-1.6l-.4-.2-3.7 1 1-3.6-.2-.4A10.1 10.1 0 1 1 16 26.3Zm5.6-7.6c-.3-.2-1.8-.9-2.1-1s-.5-.2-.7.2-.8 1-1 1.2-.4.2-.7.1a8.2 8.2 0 0 1-2.4-1.5 9.1 9.1 0 0 1-1.7-2.1c-.2-.3 0-.5.1-.7l.5-.6c.2-.2.2-.4.3-.6s0-.4 0-.6-.7-1.7-1-2.3c-.2-.5-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4s-1.2 1.2-1.2 2.8 1.2 3.2 1.4 3.4 2.4 3.7 5.8 5.1c.8.3 1.4.5 1.9.6.8.2 1.5.2 2.1.1.6-.1 1.8-.7 2-1.4s.3-1.3.2-1.4-.3-.3-.6-.4Z"/></svg><span>WhatsApp</span></button><button id="sharePayrollEmail" type="button" class="save-btn share-btn share-email"><svg class="share-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 5.5h17v13h-17z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="m4 6 8 6.5L20 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Correo electrónico</span></button></div>
       </div>
     </div>
   </section>
@@ -287,6 +293,7 @@
           <option value="de">Deutsch</option>
         </select>
       </div>
+      <button id="themeToggleBtn" class="settings-card settings-navigation theme-toggle" type="button"><span>🌗</span><strong>Apariencia · Modo claro</strong><span class="settings-chevron">›</span></button>
       <button id="openPayrollSettingsBtn" class="settings-card settings-navigation" type="button"><span>💶</span><strong>Salario e incentivos</strong><span class="settings-chevron">›</span></button>
       <div class="settings-card backup-settings">
         <h2>Copias de seguridad</h2>
@@ -361,7 +368,8 @@
   <div id="toast" class="toast"></div>
 <script src="config.js"></script>
   <script src="i18n.js"></script>
-  <script src="app.js"></script><script src="payroll.js"></script><script src="enhance.js"></script><script>if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js");</script>
+  <script src="app.js"></script><script src="payroll.js"></script>
+  <script src="enhance.js"></script><script>if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js");</script>
 
 
 </body>

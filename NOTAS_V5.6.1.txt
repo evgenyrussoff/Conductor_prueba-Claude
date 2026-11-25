@@ -1,0 +1,24 @@
+APP CONDUCTOR NORIEGA · V5.6.1 · COMBINACIÓN VISUAL
+====================================================
+
+BASE
+----
+Parte de V5.6.0 del usuario. Se han incorporado selectivamente elementos visuales de la versión Claude V5.5.6, sin sustituir la lógica principal ni los módulos de V5.6.0.
+
+CAMBIOS
+-------
+- Botones principales y secundarios con efecto de volumen 3D, tomado/adaptado de la propuesta Claude.
+- Anillos de Control Tacógrafo: ahora muestran el porcentaje de horas RESTANTES, no el porcentaje consumido.
+- Nuevo indicador circular de disponibilidad de jornada en la tarjeta principal cuando hay una jornada abierta.
+- El indicador de jornada calcula una ventana de 13 h tras un descanso de al menos 11 h (o cuando no hay descanso previo registrado) y de 15 h tras un descanso entre 9 h y menos de 11 h. Muestra el tiempo restante y el límite aplicado.
+- Se conserva íntegramente el bloque «Resumen visual · Evolución de tu actividad» de V5.6.0 (kilómetros y repostajes).
+- El botón de generación del informe mensual aparece como «Generar informe».
+- Se conserva el resto de la interfaz y módulos de V5.6.0.
+
+NOTAS Y LIMITACIONES
+--------------------
+- El indicador de jornada es orientativo y depende de que las jornadas anteriores estén correctamente registradas. Si no hay jornada cerrada anterior, se utiliza el límite de 13 h como referencia inicial.
+- El cálculo visual de 13/15 h no sustituye el control oficial del tacógrafo ni verifica todas las excepciones legales de descanso diario.
+- Los anillos de conducción usan los valores semanales y bisemanales que calcula la aplicación; muestran disponibilidad restante.
+- La versión no ha sido probada en un iPhone físico. Se han realizado comprobaciones estáticas y de sintaxis.
+- Antes de instalar: exportar una copia JSON y conservar la versión anterior.

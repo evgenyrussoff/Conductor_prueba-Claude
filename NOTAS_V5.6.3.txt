@@ -1,0 +1,5 @@
+V5.6.3
+- Estadísticas > Resumen visual: las barras de kilómetros usan ahora los periodos de facturación (26 → 25), igual que "Km mes en curso". Las barras de litros siguen por mes natural (1 al 30/31), igual que el consumo mensual. Cada gráfico lleva su título aclaratorio y la última barra (periodo/mes en curso) se resalta. Cada barra muestra su rango de fechas al mantener pulsada.
+- Anillo de disponibilidad de la pantalla principal: el porcentaje se ajusta al círculo.
+- Contraste revisado con medición automática en modo oscuro y claro: botones de inicio (Inicio, Fin, Repostajes), tarjetas del tacógrafo, calendario semanal, historial, cierre del mes, consumo, caducidades, botones Guardar/Cambiar periodo en modo claro y aviso de copia (ahora arriba).
+- No se ha modificado ningún cálculo de jornadas, tacógrafo ni consumo.

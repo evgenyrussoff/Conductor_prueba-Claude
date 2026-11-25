@@ -3,8 +3,8 @@
   "short_name": "Driver App",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#f3f6f4",
-  "theme_color": "#0a6f43",
+  "background_color": "#071b15",
+  "theme_color": "#071b15",
   "orientation": "portrait",
   "lang": "en",
   "icons": [

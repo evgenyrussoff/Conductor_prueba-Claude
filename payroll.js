@@ -1,4 +1,4 @@
-/* APP Conductor Noriega V5.5.6 - módulo de incentivos y cierre mensual */
+/* APP Conductor Noriega V5.5.5 - módulo de incentivos y cierre mensual */
 (()=>{
  const $=id=>document.getElementById(id),fmt=n=>Number(n||0).toLocaleString('es-ES',{maximumFractionDigits:2}),iso=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
  const ROUTES=[['Ferry Bilbao–Portsmouth',850],['Ferry Santander–Portsmouth',860],['Ferry Caen–Portsmouth',185],['Ferry Calais–Dover',50],['Ferry Dover–Calais',50],['Ferry Barcelona–Civitavecchia',1269],['Ferry Civitavecchia–Barcelona',1269],['Ferry Brindisi–Igumenitsa',265],['Ferry Igumenitsa–Brindisi',265],['Tren Calais–Folkestone',50],['Tren Folkestone–Calais',50]];

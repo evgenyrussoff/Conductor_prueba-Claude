@@ -1,0 +1,114 @@
+/* V5.6.2 — Contraste accesible para los dos temas */
+:root{--ui-text:#edf8f1;--ui-muted:#b6c9bd;--ui-panel:#12291e;--ui-border:rgba(190,230,207,.18);--ui-field:#091c13;--ui-field-text:#f2fff7;--ui-accent:#63e6a2}
+body:not(.light-theme) .home-ring-svg text{fill:#fff!important}
+body:not(.light-theme) .ring text{fill:#edf8f1!important}
+body.light-theme{--ui-text:#17271e;--ui-muted:#586d60;--ui-panel:#fff;--ui-border:#d6e4da;--ui-field:#fff;--ui-field-text:#17271e;--ui-accent:#087c4b}
+body.light-theme .home-ring-svg text{fill:#fff!important}
+body.light-theme .ring text{fill:#173b29!important}
+/* Contenido de pantallas: evitar textos heredados oscuros sobre tarjetas oscuras */
+body:not(.light-theme) .form-card,body:not(.light-theme) .stats-wrap,body:not(.light-theme) .history-wrap{color:var(--ui-text)}
+body:not(.light-theme) .list-card p,body:not(.light-theme) .journey-row small,body:not(.light-theme) .history-row small,body:not(.light-theme) .rest-row small,body:not(.light-theme) .fuel-history-row span,body:not(.light-theme) .document-row-main small,body:not(.light-theme) .calendar-note,body:not(.light-theme) .calendar-legend{color:var(--ui-muted)!important}
+body:not(.light-theme) .section-title,body:not(.light-theme) .analytics-heading strong{color:#a8edc2}
+body:not(.light-theme) .history-month summary b{color:#d8e9de;background:#254335}
+body:not(.light-theme) .history-weekly-rest{background:#1a3427;color:#d7e9dd;border-color:var(--ui-border)}
+body:not(.light-theme) .document-row-actions button{color:#edf8f1}
+body:not(.light-theme) .document-status{color:#baf2ce}
+body:not(.light-theme) .weekend-day{color:#e8f7ed}
+body:not(.light-theme) .calendar-day{color:#edf8f1}
+body:not(.light-theme) .payroll-dialog{color:#edf8f1}
+body:not(.light-theme) .payroll-dialog p,body:not(.light-theme) .payroll-dialog .note{color:#b6c9bd}
+body:not(.light-theme) .modal-card,body:not(.light-theme) dialog{color:#edf8f1}
+body:not(.light-theme) .modal-card p,body:not(.light-theme) dialog p{color:#b6c9bd}
+body:not(.light-theme) .form-card label,body:not(.light-theme) .settings-card label{color:#e5f4eb}
+body:not(.light-theme) input,body:not(.light-theme) select,body:not(.light-theme) textarea{color:#f2fff7}
+/* Modo claro: textos secundarios y elementos internos que conservaban colores claros */
+body.light-theme .form-card,body.light-theme .stats-wrap,body.light-theme .history-wrap{color:#17271e}
+body.light-theme .list-card p,body.light-theme .journey-row small,body.light-theme .history-row small,body.light-theme .rest-row small,body.light-theme .fuel-history-row span,body.light-theme .document-row-main small,body.light-theme .calendar-note,body.light-theme .calendar-legend{color:#586d60!important}
+body.light-theme .section-title,body.light-theme .analytics-heading strong{color:#145c3d}
+body.light-theme .history-month summary b{color:#435b4b;background:#e8f1eb}
+body.light-theme .history-weekly-rest{background:#f1f6f2;color:#435b4b;border-color:#d6e4da}
+body.light-theme .document-row-actions button{color:#294435}
+body.light-theme .document-status{color:#087a3d}
+body.light-theme .weekend-day{color:#294435}
+body.light-theme .calendar-day{color:#1b3024}
+body.light-theme .payroll-dialog{color:#17271e}
+body.light-theme .payroll-dialog p,body.light-theme .payroll-dialog .note{color:#586d60}
+body.light-theme .modal-card,body.light-theme dialog{color:#17271e}
+body.light-theme .modal-card p,body.light-theme dialog p{color:#586d60}
+body.light-theme .form-card label,body.light-theme .settings-card label{color:#213b2b}
+body.light-theme .form-card input,body.light-theme .form-card select,body.light-theme .form-card textarea,body.light-theme .settings-card input,body.light-theme .settings-card select,body.light-theme .settings-card textarea{color:#17271e}
+body.light-theme .form-card input::placeholder,body.light-theme .form-card textarea::placeholder,body.light-theme .settings-card input::placeholder{color:#718579}
+body.light-theme .tach-grid .tach-available-card{color:#fff}
+body.light-theme .tach-grid .tach-available-card strong,body.light-theme .tach-grid .tach-available-card span{color:#fff!important}
+body.light-theme .tach-grid .tach-main-card strong{color:#145c3d}
+body.light-theme .tach-grid .tach-main-card span{color:#586d60}
+body.light-theme .status-good{background:#e4f5eb;color:#086b3e}
+body.light-theme .status-data{background:#edf1ee;color:#43564a}
+body.light-theme .status-warn{background:#fff3d7;color:#705000}
+body.light-theme .status-bad{background:#ffe4e1;color:#a11f1a}
+/* Controles e iconos de compartir */
+.share-btn{display:flex;align-items:center;justify-content:center;gap:9px;min-height:50px;font-weight:850}
+.share-icon{width:22px;height:22px;flex:0 0 22px;display:block}
+.share-whatsapp{background:linear-gradient(145deg,#25d366,#128c4a)!important;color:#fff!important;border-color:rgba(255,255,255,.24)!important}
+.share-email{background:linear-gradient(145deg,#3195df,#1767ad)!important;color:#fff!important}
+body.light-theme .share-whatsapp,body.light-theme .share-email{color:#fff!important}
+.share-btn:focus-visible{outline:3px solid #f4c95d;outline-offset:3px}
+@media(max-width:390px){.share-btn{font-size:12px;gap:6px;padding:12px 7px}.share-icon{width:20px;height:20px;flex-basis:20px}}
+
+/* V5.6.3 — Contraste revisado con navegador real (ambos temas) */
+.home-ring-svg text{fill:#fff!important}
+.toast{bottom:auto!important;top:calc(env(safe-area-inset-top,0px) + 12px);transform:translate(-50%,-16px)}.toast.show{transform:translate(-50%,0)}
+body .home-actions .main-action.start{background:linear-gradient(#138552,#0a6f43)!important;color:#fff!important;text-shadow:0 1px 2px rgba(0,0,0,.45)}
+body .home-actions .main-action.finish{background:linear-gradient(#e5574d,#b3261e)!important;color:#fff!important;text-shadow:0 1px 2px rgba(0,0,0,.45)}
+body .home-actions .main-action.fuel{background:linear-gradient(#f6b64a,#d98a00)!important;color:#241600!important;text-shadow:none}
+.main-action:disabled{opacity:.6}
+.mini-bar.current small{font-weight:900;color:var(--ui-accent)}
+body:not(.light-theme) .tach-grid article span,body:not(.light-theme) .tach-main-card span{color:#c4d6cb}
+body:not(.light-theme) .tach-grid article b{color:#f2fff7}
+body:not(.light-theme) .calendar-day strong,body:not(.light-theme) .calendar-day small{color:#d4e6db}
+body:not(.light-theme) .calendar-day b.metric-good,body:not(.light-theme) .history-metric.metric-good{color:#6ee7a3}
+body:not(.light-theme) .calendar-day b.metric-warn,body:not(.light-theme) .history-metric.metric-yellow{color:#ffd166}
+body:not(.light-theme) .calendar-day b.metric-bad,body:not(.light-theme) .history-metric.metric-red{color:#ff9a90}
+body.light-theme .calendar-day b.metric-warn,body.light-theme .history-metric.metric-yellow{color:#7a5800}
+body.light-theme .document-status{background:#e7f4ed}
+body.light-theme .document-soon .document-status{color:#7a5800;background:#fff1c2}
+body.light-theme .document-expired .document-status{color:#a11f1a;background:#ffe1df}
+body.light-theme .document-row-actions button{background:#eef4f0}
+body.light-theme .document-row-actions .document-delete{background:#fff0ee}
+/* V5.6.3 — Tarjetas que seguían blancas en modo oscuro */
+body:not(.light-theme) .history-month,body:not(.light-theme) .history-year,body:not(.light-theme) .list-card,body:not(.light-theme) .next-expiring-card{background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.03)),#0f2419!important;border-color:var(--ui-border);color:var(--ui-text)}
+body:not(.light-theme) .history-month summary,body:not(.light-theme) .history-year summary{color:#a8edc2}
+body:not(.light-theme) .history-month strong,body:not(.light-theme) .history-year strong,body:not(.light-theme) .list-card strong,body:not(.light-theme) .next-expiring-content strong{color:#edf8f1}
+body:not(.light-theme) .history-month small,body:not(.light-theme) .history-year small,body:not(.light-theme) .list-card small,body:not(.light-theme) .list-card span:not([class]),body:not(.light-theme) .next-expiring-content small{color:#b6c9bd}
+body:not(.light-theme) .history-metric.metric-green,body:not(.light-theme) .history-metric.metric-ok{color:#6ee7a3}
+body:not(.light-theme) .week-calendar-head,body:not(.light-theme) .week-calendar-head *,body:not(.light-theme) .calendar-day span{color:#d4e6db}
+/* Modo claro: cifras, etiquetas y botones que heredaban colores del modo oscuro */
+body.light-theme .stats-grid article small,body.light-theme .period-card span,body.light-theme .analytics-card small,body.light-theme .tach-grid article small,body.light-theme .tach-main-card small,body.light-theme .tach-grid article span,body.light-theme .history-year small,body.light-theme .next-expiring-content small,body.light-theme #monthlyCloseScreen span:not([class]){color:#44594b}
+body.light-theme .stats-grid article strong,body.light-theme .period-card strong,body.light-theme .tach-grid article strong,body.light-theme .tach-main-card strong,body.light-theme .analytics-kicker,body.light-theme .analytics-card-head small{color:#0a6b3f}
+body.light-theme .next-expiring-content strong{color:#17271e}
+body.light-theme .backup-status,body.light-theme .note{color:#3f5547}
+body.light-theme .period-change-btn,body.light-theme .save-btn,body.light-theme .manual-tach-btn{background:linear-gradient(#138552,#0a6f43)!important;color:#fff!important}
+.share-email{background:linear-gradient(#2f7de1,#1b55b3)!important;color:#fff!important}
+.share-whatsapp{background:linear-gradient(#25c466,#0f8a43)!important;color:#fff!important}
+.main-action.start:disabled{opacity:.8}
+body.light-theme .tach-available-card small,body.light-theme .tach-available-card span{color:#3f5547!important}
+body.light-theme .tach-available-card strong{color:#0a6b3f!important}
+body.light-theme .next-expiring-card{background:linear-gradient(135deg,#fff,#eef7f1)!important;border-color:#d9e9df}
+body.light-theme .next-expiring-content strong{color:#17271e!important}
+body.light-theme .next-expiring-content small{color:#44594b!important}
+body.light-theme .note,body.light-theme .backup-status{color:#364a3e}
+body.light-theme .share-whatsapp span,body.light-theme .share-email span{color:#fff!important}
+body.light-theme .tach-available-card small,body.light-theme .tach-available-card span{color:#d9f3e4!important}
+body.light-theme .tach-available-card strong{color:#fff!important}
+body.light-theme .next-expiring-content span{color:#0a6b3f!important}
+body.light-theme .expiring-soon .next-expiring-content span{color:#7a5800!important}
+body.light-theme .expiring-expired .next-expiring-content span{color:#a11f1a!important}
+body:not(.light-theme) .list-card h2,body:not(.light-theme) .list-card h3,body:not(.light-theme) .list-card label{color:#edf8f1}
+body:not(.light-theme) .history-year span:not([class]),body:not(.light-theme) .history-month span:not([class]),body:not(.light-theme) .list-card span:not([class]){color:#d4e6db}
+.share-whatsapp{background:linear-gradient(#0d8040,#0a6a35)!important}
+body.light-theme .note,body.light-theme .backup-status{opacity:1;color:#364a3e}
+body:not(.light-theme) #monthlyCloseScreen .list-card{background:linear-gradient(180deg,rgba(255,255,255,.07),rgba(255,255,255,.03)),#0f2419!important;box-shadow:none;border:1px solid var(--ui-border)}
+body.light-theme .note,body.light-theme .backup-status{color:#26382d!important}
+body:not(.light-theme) #monthlyCloseScreen h2,body:not(.light-theme) #monthlyCloseScreen h3{color:#a8edc2!important}
+body:not(.light-theme) #monthlyCloseScreen label{color:#d4e6db!important}
+.share-whatsapp{background:linear-gradient(#0b7338,#095e2e)!important}

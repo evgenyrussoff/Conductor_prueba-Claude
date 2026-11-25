@@ -1,0 +1,23 @@
+APP CONDUCTOR NORIEGA · V5.6.2 · CONTRASTE Y COMPARTIR
+=================================================
+
+BASE
+----
+Parte de la V5.6.1 facilitada/generada en esta conversación. Conserva los módulos, datos locales, anillos del tacógrafo, indicador de jornada, botones 3D y evolución de actividad.
+
+CAMBIOS
+-------
+- Nueva capa contrast.css con ajustes de legibilidad para modo oscuro y modo claro en formularios, tarjetas, estadísticas, historial, tacógrafo, calendarios, diálogos y mensajes.
+- Porcentaje del anillo de jornada fijado en blanco de alto contraste; anillos del tacógrafo adaptan el color al tema.
+- Botón WhatsApp con icono SVG integrado y color verde.
+- Botón de correo electrónico con icono SVG de sobre integrado y color azul.
+- Iconos integrados localmente; no requieren conexión ni recursos externos.
+- Versión 5.6.2 y caché PWA renovada.
+
+PRUEBAS Y LIMITACIONES
+----------------------
+- Revisada la estructura HTML y sintaxis JavaScript.
+- ZIP verificado.
+- No se ha realizado prueba visual en iPhone físico; comprobar ambos temas y pantallas con datos reales.
+- Los iconos SVG son parte del HTML y no se descargan de Internet.
+- Antes de instalar, exportar backup JSON y conservar la V5.6.1.
