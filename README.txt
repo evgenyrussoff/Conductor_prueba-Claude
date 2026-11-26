@@ -1,4 +1,4 @@
-APP CONDUCTOR NORIEGA V5.6.0
+APP CONDUCTOR NORIEGA V5.6.5\n=============================\n\nConsulta NOTAS_V5.6.5.txt para los cambios de esta versión.\n\nAPP CONDUCTOR NORIEGA V5.6.0
 =============================
 
 Rediseño visual Premium. Consulta NOTAS_V5.6.0.txt para el detalle de cambios y advertencias.
@@ -216,4 +216,4 @@ V5.5.5 — INTEGRACIÓN SELECTIVA DE MEJORAS
 V5.5.5: incluye primer módulo de cierre mensual, selección manual de fines de semana fuera, registro inicial de trayectos Ferry/Tren e incentivos, edición del informe y avisos visuales de horas semanales/bisemanal.
 
 
-Versión 5.6.4: combinación visual. Consultar NOTAS_V5.6.4.txt.
+Versión 5.6.5: corrección del cierre mensual. Consultar NOTAS_V5.6.5.txt.

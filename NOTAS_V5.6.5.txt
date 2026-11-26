@@ -1,0 +1,17 @@
+V5.6.5
+======
+
+1. Corregido el cálculo de kilómetros en Cierre del mes: ahora se incluye completo el último día del periodo salarial (día 25). La causa era una comparación de fechas que dejaba fuera las jornadas cerradas el día 25.
+2. Nuevo cierre mensual con margen de 3 días:
+   - Los días 26, 27 y 28 se sigue mostrando el periodo salarial que acaba de terminar.
+   - Los registros nuevos del periodo siguiente se guardan normalmente y se acumulan en segundo plano, sin mezclarse con el resumen que todavía muestra el periodo anterior.
+   - Al pulsar «Generar informe» durante esos tres días, se guarda automáticamente una copia del cierre y del texto del informe; a continuación, el resumen cambia al periodo salarial nuevo.
+   - Si no se genera manualmente, el cierre anterior se archiva automáticamente a partir del cuarto día (día 29, o el día equivalente cuando febrero no tiene 29).
+3. El botón del informe se fuerza a mostrar «Generar informe».
+4. Los cierres archivados se guardan dentro de los datos de la aplicación y se incluyen en las copias de seguridad JSON.
+
+PRUEBA DE REGRESIÓN
+-------------------
+Con la copia de seguridad facilitada (periodo 26/10/2026–25/11/2026), la suma de kilómetros de jornadas cerradas es 14.005 km. Se ha comprobado que la jornada cerrada el 25/11/2026 (713 km) queda incluida. Antes se excluía ese último día y el cierre mostraba 13.292 km.
+
+No se han modificado los cálculos de jornadas, tacógrafo, consumo ni las estadísticas generales.
